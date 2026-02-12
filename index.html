@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Multi-Mode AI Chatbot - Experience AI assistance across multiple specialized modes">
+    <title>Multi-Mode Chatbot</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External Libraries -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/design-system.css">
+    <link rel="stylesheet" href="styles/glassmorphism.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+
+<body data-theme="dark">
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container animated-gradient">
+
+        <!-- Mode Selector Sidebar -->
+        <aside id="mode-selector" class="mode-selector glass panel-frost">
+            <div class="mode-selector-header">
+                <h2 class="mode-selector-title">Modes</h2>
+                <button id="theme-toggle" class="theme-toggle glass-button press-effect" aria-label="Toggle theme">
+                    <svg id="theme-icon-dark" class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="theme-icon-light" class="theme-icon" style="display: none;" width="20" height="20"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mode Navigation -->
+            <nav class="mode-nav" role="navigation" aria-label="Mode selection">
+                <button class="mode-btn active" data-mode="assistant" data-color="#6366f1">
+                    <span class="mode-icon">💬</span>
+                    <span class="mode-name">Assistant</span>
+                </button>
+                <button class="mode-btn" data-mode="codex" data-color="#10b981">
+                    <span class="mode-icon">💻</span>
+                    <span class="mode-name">Codex</span>
+                </button>
+                <button class="mode-btn" data-mode="thinking" data-color="#8b5cf6">
+                    <span class="mode-icon">🧠</span>
+                    <span class="mode-name">Thinking</span>
+                </button>
+                <button class="mode-btn" data-mode="research" data-color="#0ea5e9">
+                    <span class="mode-icon">🔍</span>
+                    <span class="mode-name">Research</span>
+                </button>
+                <button class="mode-btn" data-mode="deep-research" data-color="#3b82f6">
+                    <span class="mode-icon">🔬</span>
+                    <span class="mode-name">Deep Research</span>
+                </button>
+                <button class="mode-btn" data-mode="math" data-color="#f59e0b">
+                    <span class="mode-icon">📐</span>
+                    <span class="mode-name">Math</span>
+                </button>
+                <button class="mode-btn" data-mode="analyst" data-color="#06b6d4">
+                    <span class="mode-icon">📊</span>
+                    <span class="mode-name">Analyst</span>
+                </button>
+                <button class="mode-btn" data-mode="creative" data-color="#ec4899">
+                    <span class="mode-icon">✨</span>
+                    <span class="mode-name">Creative</span>
+                </button>
+                <button class="mode-btn" data-mode="writer" data-color="#f97316">
+                    <span class="mode-icon">✍️</span>
+                    <span class="mode-name">Writer</span>
+                </button>
+                <button class="mode-btn" data-mode="image" data-color="#a855f7">
+                    <span class="mode-icon">🎨</span>
+                    <span class="mode-name">Image</span>
+                </button>
+                <button class="mode-btn" data-mode="guided" data-color="#14b8a6">
+                    <span class="mode-icon">🎓</span>
+                    <span class="mode-name">Guided Learning</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- Chat Area -->
+            <main class="chat-area">
+                <div id="chat-messages" class="chat-messages">
+                    <!-- Welcome Message -->
+                    <div class="welcome-message animate-fade-in">
+                        <div class="welcome-logo-container">
+                            <div class="welcome-logo">M</div>
+                            <div class="welcome-glow"></div>
+                        </div>
+                        <h1 class="welcome-title">How can I help you today?</h1>
+                        <p class="welcome-subtitle">Select a mode and ask me anything.</p>
+
+                        <div class="suggestion-chips">
+                            <button class="chip" onclick="setInput('Write a Python web scraper')">Write a Python web
+                                scraper</button>
+                            <button class="chip" onclick="setInput('Explain quantum computing')">Explain quantum
+                                computing</button>
+                            <button class="chip" onclick="setInput('Solve ∫x²dx step-by-step')">Solve ∫x²dx
+                                step-by-step</button>
+                            <button class="chip" onclick="setInput('Deep research on AI ethics')">Deep research on AI
+                                ethics</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area glass-panel">
+                    <form id="chat-form">
+                        <div class="input-wrapper">
+                            <button type="button" class="input-action-btn" title="Attach file">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input type="text" id="message-input" placeholder="Message MahmudGPT..." autocomplete="off">
+                            <button type="button" class="input-action-btn microphone" title="Voice input">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button type="submit" id="send-button" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="footer-text">MahmudGPT by Tasnim Mahmud</div>
+                </div>
+            </main>
+
+            <!-- Dynamic Canvas Area -->
+            <div id="dynamic-canvas" class="dynamic-canvas" style="display: none;">
+
+                <!-- Code/Math Canvas -->
+                <div id="code-canvas" class="canvas-panel glass panel-frost" style="display: none;">
+                    <div class="canvas-header">
+                        <h3 class="canvas-title">Code Preview</h3>
+                        <button class="canvas-close press-effect" aria-label="Close canvas">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="code-content" class="canvas-content">
+                        <!-- Code/Math content will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Writing/Research Canvas -->
+                <div id="writing-canvas" class="canvas-panel glass panel-frost" style="display: none;">
+                    <div class="canvas-header">
+                        <h3 class="canvas-title">Document</h3>
+                        <button class="canvas-close press-effect" aria-label="Close canvas">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="writing-content" class="canvas-content">
+                        <!-- Writing/Research content will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Image Canvas -->
+                <div id="image-canvas" class="canvas-panel glass panel-frost" style="display: none;">
+                    <div class="canvas-header">
+                        <h3 class="canvas-title">Generated Images</h3>
+                        <button class="canvas-close press-effect" aria-label="Close canvas">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="image-content" class="canvas-content image-grid">
+                        <!-- Images will be inserted here -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area glass panel-frost">
+                <form id="chat-form" class="input-form">
+                    <input type="text" id="message-input" class="message-input glass-input focus-glow"
+                        placeholder="Type your message..." autocomplete="off" aria-label="Message input" />
+                    <button type="submit" id="send-button" class="send-button glass-button hover-scale-sm press-effect"
+                        aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="scripts/api.js"></script>
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/modes.js"></script>
+    <script src="scripts/canvas.js"></script>
+    <script src="scripts/chat.js"></script>
+    <script src="scripts/app.js"></script>
+
+</body>
+
+</html>
